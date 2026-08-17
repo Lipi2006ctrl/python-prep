@@ -1,0 +1,20 @@
+T = int(input())
+
+for _ in range(T):
+    X = int(input())
+    S = input()
+
+    score = 0
+
+    for ch in S:
+        if ch == 'C':
+            score += 2
+        elif ch == 'D':
+            score += 1
+
+    if score > 14:
+        print(60 * X)
+    elif score < 14:
+        print(40 * X)
+    else:
+        print(55 * X)
