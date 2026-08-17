@@ -1,0 +1,15 @@
+t = int(input())
+
+while t > 0:
+    s = input()
+    first=int(s[0:2])
+    second=int(s[3:5])
+    DD_MM=second<=12
+    MM_DD=first<=12
+    if DD_MM and MM_DD:
+        print("BOTH")
+    elif DD_MM:
+        print("DD/MM/YYYY")
+    else:
+        print("MM/DD/YYYY")
+    t -= 1
