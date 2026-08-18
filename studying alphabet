@@ -1,0 +1,13 @@
+known=input()
+n=int(input())
+for i in range(n):
+    word=input()
+    canread=True
+    for letter in word:
+        if letter not in known:
+            canread=False
+            break
+    if canread:
+        print("Yes")
+    else:
+        print("No")
