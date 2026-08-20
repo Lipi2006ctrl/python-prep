@@ -1,0 +1,6 @@
+t = int(input())
+
+while t > 0:
+    s = input()
+    print(int(s)%20)
+    t -= 1
