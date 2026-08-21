@@ -1,0 +1,11 @@
+t=int(input())
+for i in range(t):
+    s=input()
+    T=input()
+    m=""
+    for j in range(len(s)):
+        if s[j]==T[j]:
+            m+="g"
+        else:
+            m+="b"
+    print(m)
