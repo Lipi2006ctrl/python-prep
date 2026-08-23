@@ -1,0 +1,18 @@
+t = int(input())
+
+while t > 0:
+    n = int(input())
+    s = input()
+    a=0
+    b=0
+    server="A"
+    for winner in s:
+        if winner==server:
+            if server=="A":
+                a+=1
+            else:
+                b+=1
+        else:
+            server=winner
+    print(a,b)
+    t -= 1
