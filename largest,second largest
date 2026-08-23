@@ -1,0 +1,16 @@
+t = int(input())
+
+while t > 0:
+    n = int(input())
+    a=list(map(int,input().split()))
+    lar=-1
+    seclar=-1
+    for x in a:
+        if x>lar:
+            seclar=lar
+            lar=x
+        elif x>seclar and x != lar:
+            seclar=x
+    print(lar+seclar)
+    t -= 1
+    
