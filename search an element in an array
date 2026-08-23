@@ -1,0 +1,12 @@
+def solve(N, X, A):
+    for i in range(N):
+        if A[i] == X:
+            return "YES"
+
+    return "NO"
+
+
+N, X = map(int, input().split())
+A = list(map(int, input().split()))
+
+print(solve(N, X, A))
