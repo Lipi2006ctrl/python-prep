@@ -1,0 +1,36 @@
+T = int(input())
+
+for _ in range(T):
+    N = int(input())
+
+    A = list(map(int, input().split()))
+    B = list(map(int, input().split()))
+
+    om_count = 0
+    om_max = 0
+
+    for x in A:
+        if x > 0:
+            om_count += 1
+            if om_count > om_max:
+                om_max = om_count
+        else:
+            om_count = 0
+
+    addy_count = 0
+    addy_max = 0
+
+    for x in B:
+        if x > 0:
+            addy_count += 1
+            if addy_count > addy_max:
+                addy_max = addy_count
+        else:
+            addy_count = 0
+
+    if om_max > addy_max:
+        print("OM")
+    elif addy_max > om_max:
+        print("ADDY")
+    else:
+        print("DRAW")
