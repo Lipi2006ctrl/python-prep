@@ -1,0 +1,8 @@
+t=int(input())
+for i in range(t):
+    n=int(input())
+    a=list(map(int,input().split()))
+    total=sum(a)
+    mini=min(a)
+    print(total-mini)
+        
