@@ -1,0 +1,7 @@
+t = int(input())
+
+while t > 0:
+    x, y, z = map(int, input().split())
+    total = x * 5 + y * 10
+    print(total // z)
+    t -= 1
