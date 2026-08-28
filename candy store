@@ -1,0 +1,12 @@
+T = int(input())
+
+for _ in range(T):
+    X, Y = map(int, input().split())
+
+    if Y <= X:
+        money = Y
+    else:
+        extra = Y - X
+        money = X + extra * 2
+
+    print(money)
