@@ -1,0 +1,26 @@
+T = int(input())
+
+for _ in range(T):
+    S = input()
+
+    stack = []
+    valid = True
+
+    for ch in S:
+        if ch == '(':
+            stack.append(ch)
+
+        else:
+            if not stack:
+                valid = False
+                break
+
+            stack.pop()
+
+    if stack:
+        valid = False
+
+    if valid:
+        print(1)
+    else:
+        print(0)
