@@ -1,0 +1,40 @@
+from collections import deque
+
+T = int(input())
+
+for _ in range(T):
+    N = int(input())
+    A = list(map(int, input().split()))
+
+    q = deque(A)
+
+    turn = 0
+
+    while len(q) > 1:
+
+        if turn % 2 == 0:
+            # Aman
+            x = q.popleft()
+            q.append(x)
+
+            q.popleft()
+
+        else:
+            # Akshat
+            x = q.popleft()
+            q.append(x)
+
+            x = q.popleft()
+            q.append(x)
+
+            q.popleft()
+
+        turn += 1
+
+  
+    if N % 2 == 0:
+        person = 1
+    else:
+        person = 0
+
+    print(person, q[0])
