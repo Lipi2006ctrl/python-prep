@@ -1,0 +1,48 @@
+def precedence(op):
+    if op == '^':
+        return 3
+    elif op == '*' or op == '/':
+        return 2
+    elif op == '+' or op == '-':
+        return 1
+    return 0
+
+
+T = int(input())
+
+for _ in range(T):
+    expression = input()
+
+    stack = []
+    answer = ""
+
+    for ch in expression:
+
+        # If it is a letter
+        if ch.isalpha():
+            answer += ch
+
+        # Opening bracket
+        elif ch == '(':
+            stack.append(ch)
+
+        # Closing bracket
+        elif ch == ')':
+            while stack and stack[-1] != '(':
+                answer += stack.pop()
+
+            stack.pop()   # remove '('
+
+        # Operator
+        else:
+            while (stack and stack[-1] != '(' and
+                   precedence(stack[-1]) >= precedence(ch)):
+                answer += stack.pop()
+
+            stack.append(ch)
+
+    # Empty remaining operators
+    while stack:
+        answer += stack.pop()
+
+    print(answer)
