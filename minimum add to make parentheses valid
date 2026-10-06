@@ -1,0 +1,20 @@
+class Solution(object):
+    def minAddToMakeValid(self, s):
+        open_count = 0
+        moves = 0
+
+        for ch in s:
+
+            if ch == '(':
+                open_count += 1
+
+            else:
+                if open_count > 0:
+                    open_count -= 1
+                else:
+                    moves += 1
+
+        # Add ')' for all remaining '('
+        moves += open_count
+
+        return moves
