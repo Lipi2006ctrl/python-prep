@@ -1,0 +1,51 @@
+from collections import Counter
+from bisect import bisect_left
+
+MOD = 10**9 + 7
+
+n = int(input())
+a = list(map(int, input().split()))
+
+freq = Counter()
+left = []
+
+for x in a:
+    freq[x] += 1
+    d = len(freq)
+    left.append(freq[x] - d // 2)
+
+freq = Counter()
+right = [0] * n
+
+for i in range(n - 1, -1, -1):
+    freq[a[i]] += 1
+    d = len(freq)
+    right[i] = d // 2 - freq[a[i]]
+
+values = sorted(set(right))
+size = len(values)
+bit = [0] * (size + 1)
+
+def update(i):
+    while i <= size:
+        bit[i] += 1
+        i += i & -i
+
+def query(i):
+    total = 0
+    while i > 0:
+        total += bit[i]
+        i -= i & -i
+    return total
+
+answer = 0
+
+for i in range(n - 1, -1, -1):
+    if i < n - 1:
+        pos = bisect_left(values, right[i + 1]) + 1
+        update(pos)
+    pos = bisect_left(values, left[i])
+    answer += query(size) - query(pos)
+    answer %= MOD
+
+print(answer)
