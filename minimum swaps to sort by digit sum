@@ -1,0 +1,36 @@
+
+class Solution(object):
+    def minSwaps(self, nums):
+        def digit_sum(n):
+            total = 0
+            while n > 0:
+                total += n % 10
+                n //= 10
+            return total
+
+        n = len(nums)
+
+        # Sort by digit sum, then by number
+        arr = sorted(nums, key=lambda x: (digit_sum(x), x))
+
+        # Map each number to its original index
+        pos = {nums[i]: i for i in range(n)}
+
+        swaps = 0
+
+        for i in range(n):
+            if nums[i] == arr[i]:
+                continue
+
+            j = pos[arr[i]]
+
+            # Swap the elements
+            nums[i], nums[j] = nums[j], nums[i]
+
+            # Update their positions
+            pos[nums[j]] = j
+            pos[nums[i]] = i
+
+            swaps += 1
+
+        return swaps
