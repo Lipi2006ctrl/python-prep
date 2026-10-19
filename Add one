@@ -1,0 +1,23 @@
+
+T = int(input())
+
+for _ in range(T):
+    N = list(input().strip())
+
+    carry = 1
+
+    for i in range(len(N) - 1, -1, -1):
+        digit = int(N[i]) + carry
+
+        if digit == 10:
+            N[i] = '0'
+            carry = 1
+        else:
+            N[i] = str(digit)
+            carry = 0
+            break
+
+    if carry == 1:
+        N.insert(0, '1')
+
+    print(''.join(N))
