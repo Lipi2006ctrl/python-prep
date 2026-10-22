@@ -1,0 +1,52 @@
+
+from collections import deque
+
+class Solution(object):
+    def minOperations(self, nums):
+        n = len(nums)
+
+        if nums == list(range(n)):
+            return 0
+
+        rev = nums[::-1]
+
+        # Find target rotations of nums and reversed nums
+        targets = set()
+
+        k = nums.index(0)
+        if all(nums[(k + i) % n] == i for i in range(n)):
+            targets.add((0, k))
+
+        k = rev.index(0)
+        if all(rev[(k + i) % n] == i for i in range(n)):
+            targets.add((1, k))
+
+        if not targets:
+            return -1
+
+        # State: (orientation, left rotation count)
+        queue = deque([(0, 0, 0)])
+        visited = {(0, 0)}
+
+        while queue:
+            orientation, k, steps = queue.popleft()
+
+            if (orientation, k) in targets:
+                return steps
+
+            # Rotate left by one
+            next_k = (k + 1) % n
+            state = (orientation, next_k)
+
+            if state not in visited:
+                visited.add(state)
+                queue.append((orientation, next_k, steps + 1))
+
+            # Reverse the entire array
+            state = (1 - orientation, (-k) % n)
+
+            if state not in visited:
+                visited.add(state)
+                queue.append((1 - orientation, (-k) % n, steps + 1))
+
+        return -1
