@@ -1,0 +1,35 @@
+
+S = input().strip()
+P = input().strip()
+
+n = len(S)
+m = len(P)
+
+if m > n:
+    print(-1)
+else:
+    p_count = [0] * 26
+    s_count = [0] * 26
+
+    for ch in P:
+        p_count[ord(ch) - ord('a')] += 1
+
+    for i in range(m):
+        s_count[ord(S[i]) - ord('a')] += 1
+
+    result = []
+
+    if s_count == p_count:
+        result.append(0)
+
+    for i in range(m, n):
+        s_count[ord(S[i]) - ord('a')] += 1
+        s_count[ord(S[i - m]) - ord('a')] -= 1
+
+        if s_count == p_count:
+            result.append(i - m + 1)
+
+    if result:
+        print(*result)
+    else:
+        print(-1)
