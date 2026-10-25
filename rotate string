@@ -1,0 +1,10 @@
+def can_rotate(s, goal):
+    return len(s) == len(goal) and goal in (s + s)
+
+s = input().strip()
+goal = input().strip()
+
+if can_rotate(s, goal):
+    print("Yes")
+else:
+    print("No")
