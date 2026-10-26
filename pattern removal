@@ -1,0 +1,18 @@
+s = input().strip()
+p = input().strip()
+
+stack = []
+
+for ch in s:
+    stack.append(ch)
+
+    if len(stack) >= len(p) and ''.join(stack[-len(p):]) == p:
+        for i in range(len(p)):
+            stack.pop()
+
+result = ''.join(stack)
+
+if result == "":
+    print("Defeat")
+else:
+    print(result)
