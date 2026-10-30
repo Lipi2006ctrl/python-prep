@@ -1,0 +1,11 @@
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    ans = 0
+
+    for i in range(n):
+        x = int(input())
+        ans = ans ^ x
+
+    print(ans)
