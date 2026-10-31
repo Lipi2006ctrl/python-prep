@@ -1,0 +1,61 @@
+class Solution(object):
+    def uniquePaths(self, grid):
+        MOD = 10**9 + 7
+
+        m = len(grid)
+        n = len(grid[0])
+
+        right = [[-1] * n for _ in range(m)]
+        down = [[-1] * n for _ in range(m)]
+
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+
+                if grid[i][j] == 1:
+
+                    if i + 1 < m:
+                        if grid[i + 1][j] == 0:
+                            right[i][j] = (i + 1) * n + j
+                        else:
+                            right[i][j] = down[i + 1][j]
+
+                    if j + 1 < n:
+                        if grid[i][j + 1] == 0:
+                            down[i][j] = i * n + j + 1
+                        else:
+                            down[i][j] = right[i][j + 1]
+
+        dp = [[0] * n for _ in range(m)]
+        dp[0][0] = 1
+
+        for i in range(m):
+            for j in range(n):
+
+                if dp[i][j] == 0 or grid[i][j] == 1:
+                    continue
+
+                ways = dp[i][j]
+
+                if j + 1 < n:
+                    if grid[i][j + 1] == 0:
+                        x, y = i, j + 1
+                        dp[x][y] = (dp[x][y] + ways) % MOD
+                    else:
+                        pos = right[i][j + 1]
+
+                        if pos != -1:
+                            x, y = divmod(pos, n)
+                            dp[x][y] = (dp[x][y] + ways) % MOD
+
+                if i + 1 < m:
+                    if grid[i + 1][j] == 0:
+                        x, y = i + 1, j
+                        dp[x][y] = (dp[x][y] + ways) % MOD
+                    else:
+                        pos = down[i + 1][j]
+
+                        if pos != -1:
+                            x, y = divmod(pos, n)
+                            dp[x][y] = (dp[x][y] + ways) % MOD
+
+        return dp[m - 1][n - 1]
