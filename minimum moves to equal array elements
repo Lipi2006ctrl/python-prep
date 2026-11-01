@@ -1,0 +1,9 @@
+class Solution(object):
+    def minMoves(self, nums):
+        minimum = min(nums)
+        total = 0
+
+        for num in nums:
+            total += num - minimum
+
+        return total
