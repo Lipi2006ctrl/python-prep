@@ -1,0 +1,40 @@
+import heapq
+
+class Solution(object):
+    def assignTasks(self, servers, tasks):
+        n = len(servers)
+
+        available = []
+        busy = []
+
+        for i in range(n):
+            heapq.heappush(available, (servers[i], i))
+
+        ans = []
+        time = 0
+
+        for j in range(len(tasks)):
+
+            time = max(time, j)
+
+            while busy and busy[0][0] <= time:
+                end, weight, index = heapq.heappop(busy)
+                heapq.heappush(available, (weight, index))
+
+            if not available:
+                time = busy[0][0]
+
+                while busy and busy[0][0] <= time:
+                    end, weight, index = heapq.heappop(busy)
+                    heapq.heappush(available, (weight, index))
+
+            weight, index = heapq.heappop(available)
+
+            ans.append(index)
+
+            heapq.heappush(
+                busy,
+                (time + tasks[j], weight, index)
+            )
+
+        return ans
