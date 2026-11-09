@@ -1,0 +1,77 @@
+import heapq
+
+class Solution(object):
+    def busiestServers(self, k, arrival, load):
+        tree = [0] * (4 * k)
+        count = [0] * k
+        busy = []
+
+        def build(node, start, end):
+            if start == end:
+                tree[node] = 1
+                return
+
+            mid = (start + end) // 2
+            build(node * 2, start, mid)
+            build(node * 2 + 1, mid + 1, end)
+            tree[node] = tree[node * 2] + tree[node * 2 + 1]
+
+        def update(node, start, end, idx, val):
+            if start == end:
+                tree[node] = val
+                return
+
+            mid = (start + end) // 2
+
+            if idx <= mid:
+                update(node * 2, start, mid, idx, val)
+            else:
+                update(node * 2 + 1, mid + 1, end, idx, val)
+
+            tree[node] = tree[node * 2] + tree[node * 2 + 1]
+
+        def find(node, start, end, left, right):
+            if start > right or end < left or tree[node] == 0:
+                return -1
+
+            if start == end:
+                return start
+
+            mid = (start + end) // 2
+
+            ans = find(node * 2, start, mid, left, right)
+
+            if ans != -1:
+                return ans
+
+            return find(node * 2 + 1, mid + 1, end, left, right)
+
+        build(1, 0, k - 1)
+
+        for i in range(len(arrival)):
+            time = arrival[i]
+
+            while busy and busy[0][0] <= time:
+                finish, server = heapq.heappop(busy)
+                update(1, 0, k - 1, server, 1)
+
+            start = i % k
+
+            server = find(1, 0, k - 1, start, k - 1)
+
+            if server == -1:
+                server = find(1, 0, k - 1, 0, start - 1)
+
+            if server == -1:
+                continue
+
+            update(1, 0, k - 1, server, 0)
+
+            count[server] += 1
+
+            finish = time + load[i]
+            heapq.heappush(busy, (finish, server))
+
+        maximum = max(count)
+
+        return [i for i in range(k) if count[i] == maximum]
