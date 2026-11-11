@@ -1,0 +1,26 @@
+import bisect
+
+arr = []
+
+for x in range(32):
+    for y in range(x + 1, 32):
+        arr.append((1 << x) + (1 << y))
+
+arr.sort()
+
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+
+    i = bisect.bisect_left(arr, n)
+
+    ans = float('inf')
+
+    if i < len(arr):
+        ans = min(ans, arr[i] - n)
+
+    if i > 0:
+        ans = min(ans, n - arr[i - 1])
+
+    print(ans)
