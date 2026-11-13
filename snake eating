@@ -1,0 +1,30 @@
+t = int(input())
+
+for _ in range(t):
+    n, q = map(int, input().split())
+    arr = list(map(int, input().split()))
+
+    arr.sort()
+
+    for _ in range(q):
+        k = int(input())
+
+        count = 0
+        left = 0
+        right = n - 1
+
+        while right >= 0 and arr[right] >= k:
+            count += 1
+            right -= 1
+
+        while left < right:
+            needed = k - arr[left]
+
+            if needed <= right - left:
+                count += 1
+                left += needed + 1
+                right -= 1
+            else:
+                break
+
+        print(count)
