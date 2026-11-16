@@ -1,0 +1,38 @@
+n = int(input())
+houses = list(map(int, input().split()))
+
+m = int(input())
+sprinklers = list(map(int, input().split()))
+
+houses.sort()
+sprinklers.sort()
+
+left = 0
+right = max(
+    abs(houses[0] - sprinklers[-1]),
+    abs(houses[-1] - sprinklers[0])
+)
+
+while left < right:
+    mid = (left + right) // 2
+
+    i = 0
+    j = 0
+    possible = True
+
+    while i < n:
+        while j < m - 1 and abs(sprinklers[j + 1] - houses[i]) <= abs(sprinklers[j] - houses[i]):
+            j += 1
+
+        if abs(sprinklers[j] - houses[i]) > mid:
+            possible = False
+            break
+
+        i += 1
+
+    if possible:
+        right = mid
+    else:
+        left = mid + 1
+
+print(left)
