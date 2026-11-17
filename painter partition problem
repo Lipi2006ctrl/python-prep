@@ -1,0 +1,37 @@
+def painter_partition(boards, k):
+    low = max(boards)
+    high = sum(boards)
+
+    while low < high:
+        mid = (low + high) // 2
+
+        painters = 1
+        total = 0
+
+        for length in boards:
+            if total + length <= mid:
+                total += length
+            else:
+                painters += 1
+                total = length
+
+        if painters <= k:
+            high = mid
+        else:
+            low = mid + 1
+
+    return low
+
+
+def main():
+    t = int(input())
+
+    for _ in range(t):
+        N, k = map(int, input().split())
+        boards = list(map(int, input().split()))
+
+        print(painter_partition(boards, k))
+
+
+if __name__ == "__main__":
+    main()
