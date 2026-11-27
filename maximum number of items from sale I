@@ -1,0 +1,40 @@
+class Solution(object):
+    def maxTotal(self, items, budget):
+        n = len(items)
+
+        # Calculate free bonus for each item type
+        bonus = [0] * n
+
+        for i in range(n):
+            factor = items[i][0]
+
+            for j in range(n):
+                if i != j and items[j][0] % factor == 0:
+                    bonus[i] += 1
+
+        # dp[b] = maximum copies using exactly b money
+        dp = [-1] * (budget + 1)
+        dp[0] = 0
+
+        for i in range(n):
+            factor = items[i][0]
+            price = items[i][1]
+
+            # Current item type has been purchased at least once
+            cur = [-1] * (budget + 1)
+
+            for b in range(price, budget + 1):
+
+                # Buy the first copy of this item type
+                if dp[b - price] != -1:
+                    cur[b] = dp[b - price] + 1 + bonus[i]
+
+                # Buy another copy of the same item type
+                if cur[b - price] != -1:
+                    cur[b] = max(cur[b], cur[b - price] + 1)
+
+            # Merge the current item into the main DP
+            for b in range(budget + 1):
+                dp[b] = max(dp[b], cur[b])
+
+        return max(dp)
